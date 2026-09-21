@@ -149,8 +149,24 @@ document.addEventListener("DOMContentLoaded", () => {
         if (rolesCounter) {
           rolesCounter.textContent = `0${index} / 0${totalRoles}`;
         }
+
+        // Update scroll indicator
+        const maxScroll = rolesContainer.scrollWidth - rolesContainer.clientWidth;
+        if (scrollLeft < maxScroll - 10) {
+          rolesContainer.classList.add("scrollable");
+        } else {
+          rolesContainer.classList.remove("scrollable");
+        }
       }
     }, { passive: true });
+
+    // Initialize scroll indicator on mobile
+    if (window.innerWidth < 960) {
+      const maxScroll = rolesContainer.scrollWidth - rolesContainer.clientWidth;
+      if (maxScroll > 10) {
+        rolesContainer.classList.add("scrollable");
+      }
+    }
   }
 
   // Master Scroll Dispatcher (Combined into single rAF for 60fps)
@@ -446,4 +462,38 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     revealTargets.forEach((el) => el.classList.add("is-visible"));
   }
+
+  // =========================================================================
+  // 9. Touch Feedback for Mobile Devices
+  // =========================================================================
+  if ("ontouchstart" in window) {
+    const touchElements = document.querySelectorAll(
+      ".button, .role-panel, .nav-cta, .copy-email-btn, .footer-link-btn"
+    );
+
+    touchElements.forEach((el) => {
+      el.addEventListener("touchstart", () => {
+        el.style.opacity = "0.8";
+      }, { passive: true });
+
+      el.addEventListener("touchend", () => {
+        el.style.opacity = "";
+      }, { passive: true });
+
+      el.addEventListener("touchcancel", () => {
+        el.style.opacity = "";
+      }, { passive: true });
+    });
+  }
+
+  // =========================================================================
+  // 10. Mobile Viewport Height Fix
+  // =========================================================================
+  const setVH = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  };
+
+  setVH();
+  window.addEventListener("resize", setVH, { passive: true });
 });

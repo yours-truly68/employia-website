@@ -1284,6 +1284,107 @@ button {
    19. Responsive Breakpoints
    ========================================================================== */
 
+/* Safe Area Handling for Modern Phones */
+@supports (padding: env(safe-area-inset-top)) {
+  .site-header {
+    padding-top: max(16px, env(safe-area-inset-top));
+  }
+
+  .hero {
+    padding-bottom: max(84px, calc(84px + env(safe-area-inset-bottom)));
+  }
+
+  .site-footer {
+    padding-bottom: max(56px, calc(56px + env(safe-area-inset-bottom)));
+  }
+
+  .toast-notice {
+    bottom: max(24px, calc(24px + env(safe-area-inset-bottom)));
+  }
+
+  .modal-card {
+    margin-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .button {
+    min-height: 48px;
+    padding: 14px 20px;
+  }
+
+  .role-panel {
+    cursor: default;
+  }
+
+  .role-panel:active {
+    transform: scale(0.98);
+  }
+
+  .nav-cta {
+    min-height: 48px;
+  }
+
+  .roles-arrow-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .menu-toggle {
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  .copy-email-btn {
+    min-height: 48px;
+  }
+
+  /* Touch feedback for interactive elements */
+  .button:active,
+  .role-panel:active,
+  .nav-cta:active,
+  .copy-email-btn:active,
+  .footer-link-btn:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Mobile Viewport Height Fix */
+:root {
+  --vh: 1vh;
+}
+
+.hero {
+  min-height: calc(var(--vh, 1vh) * 100);
+}
+
+/* Small mobile phones (320px - 374px) */
+@media (max-width: 374px) {
+  .hero h1 {
+    font-size: clamp(32px, 12vw, 48px);
+  }
+
+  .hero-copy {
+    font-size: clamp(14px, 4vw, 18px);
+  }
+
+  .door-copy h2 {
+    font-size: clamp(32px, 10vw, 48px);
+  }
+
+  .closing-headline-col h2 {
+    font-size: clamp(36px, 12vw, 56px);
+  }
+
+  .role-panel {
+    width: clamp(260px, 90vw, 320px);
+    min-width: clamp(260px, 90vw, 320px);
+    height: clamp(420px, 65vh, 480px);
+  }
+}
+
 /* Breakpoint: Small Desktops & Tablets (<= 1024px) */
 @media (max-width: 1024px) {
   .process-steps {
@@ -1322,6 +1423,12 @@ button {
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
     padding: 10px 0 24px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .roles-rail-container::-webkit-scrollbar {
+    display: none;
   }
 
   .roles-rail {
@@ -1395,10 +1502,17 @@ button {
     border: 1px solid var(--line);
     border-radius: var(--radius);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    z-index: 55;
   }
 
   .nav-links.mobile-open {
     display: flex;
+  }
+
+  .nav-links a {
+    font-size: 16px;
+    padding: 8px 0;
+    width: 100%;
   }
 
   .nav-cta {
@@ -1470,6 +1584,151 @@ button {
   .footer-nav {
     flex-wrap: wrap;
     gap: 16px;
+  }
+
+  /* Hero section mobile improvements */
+  .hero {
+    min-height: 100svh;
+    padding-top: 100px;
+    padding-bottom: 60px;
+  }
+
+  .hero h1 {
+    font-size: clamp(40px, 10vw, 64px);
+    line-height: 0.94;
+    margin-bottom: 20px;
+  }
+
+  .hero-copy {
+    font-size: clamp(16px, 4vw, 20px);
+    margin-bottom: 28px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .hero-actions .button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Door panels mobile improvements */
+  .door-panel {
+    min-height: auto;
+  }
+
+  .door-media {
+    min-height: clamp(240px, 40vh, 320px);
+  }
+
+  .door-copy {
+    padding: clamp(40px, 6vw, 64px) clamp(20px, 4vw, 32px);
+  }
+
+  .door-copy h2 {
+    font-size: clamp(36px, 8vw, 56px);
+    margin-bottom: 20px;
+  }
+
+  .door-subtext {
+    font-size: clamp(15px, 3.5vw, 18px);
+    margin-bottom: 28px;
+  }
+
+  /* Roles section mobile improvements */
+  .roles-pinned-section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .roles-header {
+    margin-bottom: 24px;
+  }
+
+  .roles-header-text h2 {
+    font-size: clamp(28px, 6vw, 40px);
+  }
+
+  .role-panel {
+    width: clamp(280px, 85vw, 340px);
+    min-width: clamp(280px, 85vw, 340px);
+    height: clamp(440px, 60vh, 500px);
+    padding: 28px;
+  }
+
+  .role-panel h3 {
+    font-size: clamp(24px, 5vw, 32px);
+  }
+
+  /* Closing section mobile improvements */
+  .closing {
+    padding-top: clamp(80px, 12vh, 140px);
+    padding-bottom: clamp(80px, 12vh, 140px);
+  }
+
+  .closing-headline-col h2 {
+    font-size: clamp(40px, 10vw, 64px);
+    margin-bottom: 32px;
+  }
+
+  .closing-subtext {
+    font-size: clamp(16px, 4vw, 20px);
+    margin-bottom: 32px;
+  }
+
+  /* Process section mobile improvements */
+  .process-editorial {
+    padding-top: 80px;
+    padding-bottom: 100px;
+  }
+
+  .process-editorial-header h2 {
+    font-size: clamp(32px, 8vw, 48px);
+  }
+
+  /* Positioning section mobile improvements */
+  .positioning {
+    padding-top: 100px;
+    padding-bottom: 80px;
+  }
+
+  .positioning h2 {
+    font-size: clamp(36px, 9vw, 56px);
+  }
+
+  .positioning-highlight {
+    font-size: clamp(18px, 5vw, 28px);
+  }
+
+  /* Modal mobile improvements */
+  .modal-card {
+    padding: 28px;
+    max-height: 90vh;
+  }
+
+  .modal-close-btn {
+    top: 16px;
+    right: 16px;
+  }
+
+  /* Roles section scroll indicator for mobile */
+  .roles-rail-container::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    background: linear-gradient(to right, transparent, var(--paper));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .roles-rail-container.scrollable::after {
+    opacity: 1;
   }
 }
 
